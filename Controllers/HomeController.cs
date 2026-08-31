@@ -6,6 +6,7 @@ namespace capitulo01.Controllers
 {
     public class HomeController : Controller
     {
+        //Definição	de	uma	action	chamada	Index
         public IActionResult Index()
         {
             return View();

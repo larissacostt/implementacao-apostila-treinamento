@@ -1,4 +1,5 @@
 namespace capitulo01.Models
+
 {
     public class ErrorViewModel
     {
