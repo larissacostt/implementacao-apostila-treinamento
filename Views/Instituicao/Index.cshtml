@@ -1,0 +1,57 @@
+@model IEnumerable<capitulo01.Models.Instituicao> // recebe uma lista do tipo instuicao
+    @{
+    ViewData["Title"] = "Index";
+    Layout = null; //esta view não vai utilizar layout
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Criar nova Instituição</a> <!-- gera o link para action create do controller-->
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.InstituicaoID)
+            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Endereco)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <!--cria uma linha pra cada ID mostrando seus atributos-->
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => item.InstituicaoID)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Endereco)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.InstituicaoID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.InstituicaoID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.InstituicaoID })}
+                </td>
+            </tr>
+        }
+        @*<td>
+            <a asp-action="Edit" asp-route-id="@item.InstituicaoID">Edit</a> |
+            <a asp-action="Details" asp-route-id="@item.InstituicaoID">Details</a> |
+            <a asp-action="Delete" asp-route-id="@item.InstituicaoID">Delete</a>
+        </td>
+        *@
+
+    </tbody>
+</table>
