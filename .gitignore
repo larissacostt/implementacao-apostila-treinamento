@@ -1,0 +1,21 @@
+## Visual Studio
+.vs/
+*.user
+*.suo
+
+## Build
+bin/
+obj/
+
+## NuGet
+packages/
+
+## Logs
+*.log
+
+## Visual Studio Code
+.vscode/
+
+## Sistema operacional
+.DS_Store
+Thumbs.db
