@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace capitulo01.Controllers
 {
-    // Instituições	de	Ensino	Superior dominio
+   
     public class InstituicaoController : Controller
     {
         private static IList<Instituicao> instituicoes =
