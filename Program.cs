@@ -1,19 +1,20 @@
 using   capitulo01.Data;
 using   Microsoft.EntityFrameworkCore;
 
+//cria o objeto que vai montar a aplicação
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<IESContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("IESConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("IESConnection"))); //procura a conexao chamada
 
-var app = builder.Build();
+var app = builder.Build(); //pega a configuração e monta a aplicação
 
-using (var scope = app.Services.CreateScope())
+using (var scope = app.Services.CreateScope()) //cria o ambiente pra pegar o serviços config
 {
-    var services = scope.ServiceProvider;
+    var services = scope.ServiceProvider; //objeto que fornece os serviços registrados
     try
     {
         var context = services.GetRequiredService<IESContext>();

@@ -26,7 +26,7 @@ namespace capitulo01.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            object value = optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database = IESCasaDoCodigo; Trusted_Connection = True; MultipleActiveReultSets = true");
+            object value = optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQllocaldb;Database = IESCasaDoCodigo; Trusted_Connection = True");
         }
     }
 }
