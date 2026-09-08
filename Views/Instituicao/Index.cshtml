@@ -1,57 +1,75 @@
-@model IEnumerable<capitulo01.Models.Instituicao> // recebe uma lista do tipo instuicao
-    @{
+@model IEnumerable<capitulo01.Models.Instituicao>
+@* recebe uma lista do tipo Instituicao *@
+
+@{
     ViewData["Title"] = "Index";
-    Layout = null; //esta view não vai utilizar layout
+    Layout = "_LayoutIES";
 }
+@section Styles{
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/datatables/css/jquery.dataTables.css"/>
+    </environment>
 
-<h1>Index</h1>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css"
+              asp-fallback-href="~/lib/datatables/css/jquery.dataTables.css"
+              asp-fallback-test-class="sr-only" 
+              asp-fallback-test-property="position" 
+              asp-fallback-test-value="absolute"/>
+    </environment>
+}
+<div class="card-block">
+    <div class= "card-header text-black-50 white text-center h1"
+         style="background-color: #D85A77;">
+    Instituições Registradas 
+    </div>
+        <div class="card-body">
+            <table id="tabela_instituicoes" class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.InstituicaoID)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Nome)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Endereco)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+             <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.InstituicaoID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Endereco)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.InstituicaoID">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.InstituicaoID">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.InstituicaoID">Delete</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
 
-<p>
-    <a asp-action="Create">Criar nova Instituição</a> <!-- gera o link para action create do controller-->
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <td>
-                @Html.DisplayNameFor(model => model.InstituicaoID)
-            </td>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Endereco)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <!--cria uma linha pra cada ID mostrando seus atributos-->
-            <tr>
-                <td>
-                    @Html.DisplayFor(model => item.InstituicaoID)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => item.Nome)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => item.Endereco)
-                </td>
+        </table>
+</div>
 
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.InstituicaoID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.InstituicaoID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.InstituicaoID })}
-                </td>
-            </tr>
-        }
-        @*<td>
-            <a asp-action="Edit" asp-route-id="@item.InstituicaoID">Edit</a> |
-            <a asp-action="Details" asp-route-id="@item.InstituicaoID">Details</a> |
-            <a asp-action="Delete" asp-route-id="@item.InstituicaoID">Delete</a>
-        </td>
-        *@
+    <div class="card-footer bg-success text-black-50 text-center">
+        <a asp-action="Create" class="btn-success">Criar uma nova instituição</a>
+    </div>
 
-    </tbody>
-</table>
+</div>
+@section ScriptPage{
+    <environment include="Development"></environment>
+    <environment>exclude="Development"</environment>
+}
