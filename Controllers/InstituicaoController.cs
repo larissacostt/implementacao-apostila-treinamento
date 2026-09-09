@@ -1,11 +1,19 @@
-﻿using capitulo01.Models;
+﻿using capitulo01.Data;
+using capitulo01.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace capitulo01.Controllers
 {
    
     public class InstituicaoController : Controller
     {
+        private readonly IESContext _context;
+
+        public InstituicaoController(IESContext context)
+        {
+            this._context = context;
+        }
         private static IList<Instituicao> instituicoes =
             new List<Instituicao>()
             {
@@ -52,7 +60,7 @@ namespace capitulo01.Controllers
         }
 
         //Get - abre a tela de ediçao
-        public ActionResult Edit(int id) //cria a action
+        public ActionResult Edit(long id) //cria a action
         {
             return View(instituicoes.Where(i => i.InstituicaoID == id).First()); //busca e compara, e envia pra view
         }
@@ -86,9 +94,25 @@ namespace capitulo01.Controllers
             return View(instituicoes.Where(i => i.InstituicaoID == id).First());
         }
 
-        //Delete
-        [HttpPost]
+        // POST: Instituicao/Delete
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+
+        public async Task<IActionResult> DeleteConfirmed(long id)
+        {
+            var instituicao = await _context.Instituicoes.
+                SingleOrDefaultAsync(m => m.InstituicaoID == id);
+
+            _context.Instituicoes.Remove(instituicao);
+            await _context.SaveChangesAsync();
+
+            TempData["Message"] = "Instituição	" + 
+                instituicao.Nome.ToUpper() + 
+                "	foi	removida";
+
+            return RedirectToAction(nameof(Index));
+        }
+
         public ActionResult Delete(Instituicao instituicao)
         {
             instituicoes.Remove(instituicoes.Where(i => i.InstituicaoID == instituicao.InstituicaoID).First());
