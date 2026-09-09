@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace capitulo01.Data
 {
-    public interface IESDbInitializer
+    public class IESDbInitializer
     {
         public static void Initialize(IESContext context)
         {
