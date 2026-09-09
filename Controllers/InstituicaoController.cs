@@ -14,6 +14,12 @@ namespace capitulo01.Controllers
         {
             this._context = context;
         }
+
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Instituicoes.OrderBy(c => c.Nome).ToListAsync());
+        }
+
         private static IList<Instituicao> instituicoes =
             new List<Instituicao>()
             {
@@ -65,6 +71,8 @@ namespace capitulo01.Controllers
             return View(instituicoes.Where(i => i.InstituicaoID == id).First()); //busca e compara, e envia pra view
         }
 
+
+
         [HttpPost] //executada quando o formulário for enviado usando POST
         [ValidateAntiForgeryToken] //termo de segurança
         public ActionResult Create(Instituicao instituicao) //passa os parametros
@@ -73,6 +81,7 @@ namespace capitulo01.Controllers
             instituicao.InstituicaoID = instituicoes.Select(i => i.InstituicaoID).Max() + 1;
             return RedirectToAction("Index");
         }
+
 
         // POST - recebe os dados alterados
         [HttpPost]
@@ -113,12 +122,14 @@ namespace capitulo01.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public ActionResult Delete(Instituicao instituicao)
+
+
+        /*public ActionResult Delete(Instituicao instituicao)
         {
             instituicoes.Remove(instituicoes.Where(i => i.InstituicaoID == instituicao.InstituicaoID).First());
             return RedirectToAction("Index");
         }
-
+        */
 
         public IActionResult CriarInstituicao()
         {

@@ -10,23 +10,62 @@ namespace capitulo01.Data
         {
             context.Database.EnsureCreated();
 
-            if (context.Departamentos.Any())
+            if (!context.Departamentos.Any())
             {
-                return;
-            }
-            var departamentos = new Departamento[]
-            {
+
+
+                var departamentos = new Departamento[]
+                {
                 new Departamento() { Nome = "Ciências da Computação" },
                 new Departamento() { Nome = "Ciências de Alimentos" }
+                };
+
+                foreach (Departamento d in departamentos)
+                {
+                    context.Departamentos.Add(d);
+                }
+            }
+
+            if (!context.Instituicoes.Any())
+            {
+
+
+                var instituicoes = new Instituicao[] {
+
+                new Instituicao() {
+
+                    Nome = "UniParaná",
+                    Endereco= "Curitiba"
+                },
+
+                new Instituicao()
+                {
+                    Nome = "UniSanta",
+                    Endereco = "Santa Catarina"
+                },
+
+                new Instituicao(){
+                    Nome = "UniVale",
+                    Endereco = "Rio Grande do Sul"
+                },
+
+                new Instituicao()
+                {
+                    Nome = "Feevale",
+                    Endereco = "Novo Hamburgo"
+                }
             };
 
-            foreach(Departamento d in departamentos)
-            {
-                context.Departamentos.Add(d);
+                foreach (Instituicao i in instituicoes)
+                {
+                    context.Instituicoes.Add(i);
+                }
             }
-            context.SaveChanges();
-        }       
+
+                    context.SaveChanges();
+                
+        }
     }
-}
+ }
 
 
