@@ -14,7 +14,6 @@
     <div class="card-body">
 
         <form asp-action="Create">
-
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
@@ -30,24 +29,20 @@
             </div>
 
             <div class="form-group text-center h3">
-                <input type="submit"
-                       value="Registrar Instituições"
-                       class="btn btn-light" />
+                <input type="submit" 
+                    value="Registrar Instituições" 
+                    class="btn btn-primary" />
 
                 <a asp-action="Index"
                    class="btn btn-info">
                     Retornar à listagem de instituições
                 </a>
             </div>
-
         </form>
-
     </div>
-
     <div class="card-footer bg-dark text-center text-white">
         Informe os dados acima e/ou clique em um dos botões de ação
     </div>
-
 </div>
 
 

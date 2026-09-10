@@ -21,8 +21,10 @@ namespace capitulo01.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Departamento>().ToTable("Departamento");
+            modelBuilder.Entity<Instituicao>().ToTable("Instituicao");
             // configura a entidade departamento e como deve ser mapeada
         }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

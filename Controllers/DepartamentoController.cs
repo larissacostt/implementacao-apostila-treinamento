@@ -2,7 +2,6 @@
 using capitulo01.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Runtime.InteropServices;
 
 namespace capitulo01.Controllers
 {
@@ -20,8 +19,9 @@ namespace capitulo01.Controllers
             return View(await _context.Departamentos.Include(i => i.Instituicao).OrderBy(c => c.Nome).ToListAsync());
         }
 
-        public IActionResult Create()
-        {
+        [HttpGet]
+        public async Task<IActionResult> Create()
+       {
             var instituicoes = _context.Instituicoes.OrderBy(i => i.Nome).ToList();
             instituicoes.Insert(0, new Instituicao()
             {
@@ -34,7 +34,7 @@ namespace capitulo01.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Nome")] Departamento departamento)
+        public async Task<IActionResult> Create([Bind("Nome, InstituicaoID")] Departamento departamento)
         {
             try
             {
@@ -116,7 +116,7 @@ namespace capitulo01.Controllers
             return View(departamento);
         }
 
-        //	GET:	Departamento/Delete/5
+        //	GET:	Departamento/Delete/
         public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
