@@ -1,35 +1,82 @@
 @model IEnumerable<capitulo01.Models.Departamento>
 
 @{
-    ViewData["Title"] = "Index";
+    Layout = "_LayoutIES";
 }
 
-<h1>Index</h1>
+@section Styles{
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/datatables/css/jquery.dataTables.css" />
+    </environment>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(model => item.Nome)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.DepartamentoID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.DepartamentoID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.DepartamentoID">Delete</a>
-            </td>
-        </tr>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css"
+              asp-fallback-href="~/lib/datatables/css/jquery.dataTables.css"
+              asp-fallback-test-class="sr-only"
+              asp-fallback-test-property="position"
+              asp-fallback-test-value="absolute" />
+    </environment>
 }
-    </tbody>
-</table>
+
+@if (TempData ["Message"] != null)
+{
+    <div class="card-block">
+        <div class="card-header text-white bg-primary text-center h1">Departamento Registrados</div>
+        <div class="card-body">
+            <table id="tabela_departamentos">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Nome)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Instituicao.Nome)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nome)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Instituicao.Nome)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.DepartamentoID">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.DepartamentoID">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.DepartamentoID">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer bg-sucess text-center">
+            <a asp-action="Create" class="btn-sucess">Criar um novo departamento</a>
+        </div>
+    </div>
+
+    @section ScriptPage{
+        <environment>
+            <script src="~/lib/datatables/js/jquery.dataTables.js"></script>
+        </environment>
+        <environment exclude="Development">
+            <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.js"
+                asp-fallback-src="~/lib/datatables/js/jquery.dataTables.js">
+            </script>
+        </environment>
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#tabel_departamentos').DataTable({
+                    "order": [[1, "asc"]]
+                });
+            });
+        </script>
+    }
+}
+

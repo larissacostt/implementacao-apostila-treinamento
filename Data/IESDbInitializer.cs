@@ -8,64 +8,48 @@ namespace capitulo01.Data
     {
         public static void Initialize(IESContext context)
         {
+
+            context.Database.EnsureDeleted();
+
             context.Database.EnsureCreated();
+
+            if (!context.Instituicoes.Any())
+            {
+                return;
+            }
+
+            var instituicoes = new Instituicao[]
+            {
+                new Instituicao() { Nome = "UniCampo", Endereco ="São Paulo"},
+                new Instituicao() { Nome = "UniAcre", Endereco="Acre" }
+            };
+
+            foreach (Instituicao i in instituicoes)
+            {
+                context.Instituicoes.Add(i);
+            }
+
+            context.SaveChanges();
+
 
             if (!context.Departamentos.Any())
             {
+                return;
+            }
 
+            var departamentos = new Departamento[] {
 
-                var departamentos = new Departamento[]
-                {
                 new Departamento() { Nome = "Ciências da Computação" },
                 new Departamento() { Nome = "Ciências de Alimentos" }
                 };
 
-                foreach (Departamento d in departamentos)
-                {
-                    context.Departamentos.Add(d);
-                }
-            }
-
-            if (!context.Instituicoes.Any())
+            foreach (Departamento d in departamentos)
             {
-
-
-                var instituicoes = new Instituicao[] {
-
-                new Instituicao() {
-
-                    Nome = "UniParaná",
-                    Endereco= "Curitiba"
-                },
-
-                new Instituicao()
-                {
-                    Nome = "UniSanta",
-                    Endereco = "Santa Catarina"
-                },
-
-                new Instituicao(){
-                    Nome = "UniVale",
-                    Endereco = "Rio Grande do Sul"
-                },
-
-                new Instituicao()
-                {
-                    Nome = "Feevale",
-                    Endereco = "Novo Hamburgo"
-                }
-            };
-
-                foreach (Instituicao i in instituicoes)
-                {
-                    context.Instituicoes.Add(i);
-                }
+                context.Departamentos.Add(d);
             }
 
-                    context.SaveChanges();
-                
         }
     }
- }
+}
 
 

@@ -14,13 +14,21 @@ namespace capitulo01.Controllers
         {
             this._context = context;
         }
+
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Departamentos.OrderBy(c => c.Nome).ToListAsync());
+            return View(await _context.Departamentos.Include(i => i.Instituicao).OrderBy(c => c.Nome).ToListAsync());
         }
 
         public IActionResult Create()
         {
+            var instituicoes = _context.Instituicoes.OrderBy(i => i.Nome).ToList();
+            instituicoes.Insert(0, new Instituicao()
+            {
+                InstituicaoID = 0,
+                Nome = "Selecione a instituição"
+            });
+            ViewBag.Instituicoes = instituicoes;
             return View();
         }
 
@@ -134,6 +142,5 @@ namespace capitulo01.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
     }
 }
