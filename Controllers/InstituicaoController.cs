@@ -1,7 +1,6 @@
 ﻿using capitulo01.Data;
 using capitulo01.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
 namespace capitulo01.Controllers
@@ -16,9 +15,32 @@ namespace capitulo01.Controllers
             this._context = context;
         }
 
+        public static IList<Instituicao> instituicoes =
+            new List<Instituicao>()
+            {
+                new Instituicao() {
+                    InstituicaoID = 1,
+                    Nome = "UniCampi",
+                    Endereco = "São Paulo"
+            },
+                new Instituicao()
+                {
+                    InstituicaoID = 2,
+                    Nome = "UniSanta",
+                    Endereco = "Santa Catarina"
+                },
+
+                new Instituicao()
+                {
+                    InstituicaoID = 3,
+                    Nome = "UniSul",
+                    Endereco = "Rio Grande do Sul"
+                }
+            };
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Instituicoes.OrderBy(c => c.Nome).ToListAsync());
+
+            return View(await _context.Instituicoes.OrderBy(i => i.Nome).ToListAsync());
         }
 
         //GET: Instituicao/Create
@@ -42,6 +64,7 @@ namespace capitulo01.Controllers
                 {
                     _context.Add(instituicao);
                     await _context.SaveChangesAsync();
+
                     return RedirectToAction(nameof(Index));
                 }
             }
@@ -149,7 +172,13 @@ namespace capitulo01.Controllers
             var instituicao = await _context.Instituicoes.
                 SingleOrDefaultAsync(m => m.InstituicaoID == id);
 
+            if(instituicao == null)
+            {
+                return NotFound();
+            }
+
             _context.Instituicoes.Remove(instituicao);
+
             await _context.SaveChangesAsync();
 
             TempData["Message"] = "Instituição	" +

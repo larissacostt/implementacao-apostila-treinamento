@@ -1,5 +1,4 @@
-﻿using capitulo01.Data;
-using capitulo01.Models;
+﻿using capitulo01.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace capitulo01.Data
@@ -28,7 +27,7 @@ namespace capitulo01.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            object value = optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQllocaldb;Database = IESCasaDoCodigo; Trusted_Connection = True");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQllocaldb;Database = IESCasaDoCodigo; Trusted_Connection = True");
         }
     }
 }

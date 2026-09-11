@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-
+﻿
 namespace capitulo01.Models
 {
     public class Departamento
@@ -9,6 +7,6 @@ namespace capitulo01.Models
         public string? Nome {  get; set; }
 
         public long? InstituicaoID {  get; set; }
-        public Instituicao Instituicao { get; set; }
+        public Instituicao? Instituicao { get; set; }
     }
 }

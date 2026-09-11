@@ -9,11 +9,9 @@ namespace capitulo01.Data
         public static void Initialize(IESContext context)
         {
 
-            context.Database.EnsureDeleted();
-
             context.Database.EnsureCreated();
 
-            if (!context.Instituicoes.Any())
+            if (context.Instituicoes.Any())
             {
                 return;
             }
@@ -32,7 +30,7 @@ namespace capitulo01.Data
             context.SaveChanges();
 
 
-            if (!context.Departamentos.Any())
+            if (context.Departamentos.Any())
             {
                 return;
             }
@@ -48,6 +46,7 @@ namespace capitulo01.Data
                 context.Departamentos.Add(d);
             }
 
+            context.SaveChanges();
         }
     }
 }

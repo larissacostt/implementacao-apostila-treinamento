@@ -1,6 +1,7 @@
 ﻿using capitulo01.Data;
 using capitulo01.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace capitulo01.Controllers
@@ -19,22 +20,25 @@ namespace capitulo01.Controllers
             return View(await _context.Departamentos.Include(i => i.Instituicao).OrderBy(c => c.Nome).ToListAsync());
         }
 
+
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
        {
             var instituicoes = _context.Instituicoes.OrderBy(i => i.Nome).ToList();
+
             instituicoes.Insert(0, new Instituicao()
             {
                 InstituicaoID = 0,
                 Nome = "Selecione a instituição"
             });
+
             ViewBag.Instituicoes = instituicoes;
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Nome, InstituicaoID")] Departamento departamento)
+        public async Task<IActionResult> Create([Bind("Nome,InstituicaoID")] Departamento departamento)
         {
             try
             {
@@ -49,6 +53,17 @@ namespace capitulo01.Controllers
             {
                 ModelState.AddModelError(" ", "Não foi possível inserir dados");
             }
+
+            var instituicoes = await _context.Instituicoes.OrderBy(i => i.Nome).ToListAsync();
+            instituicoes.Insert(0, new Instituicao()
+            {
+                InstituicaoID = 0,
+
+                Nome = "Selecione a instituição"
+            });
+
+            ViewBag.Instituicoes = instituicoes;
+
             return View(departamento);
 
         }
@@ -59,16 +74,21 @@ namespace capitulo01.Controllers
                 return NotFound();
             }
             var departamento = await _context.Departamentos.SingleOrDefaultAsync(m => m.DepartamentoID == id);
+
             if (departamento == null)
             {
                 return NotFound();
             }
+
+            ViewBag.Instituicoes = new SelectList(_context.Instituicoes
+                .OrderBy(b => b.Nome), "InstituicaoID", "Nome", departamento.InstituicaoID);
+
             return View(departamento);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long? id, [Bind("DepartamentoID,Nome")] Departamento departamento)
+        public async Task<IActionResult> Edit(long? id, [Bind("DepartamentoID,Nome,InstituicaoID")] Departamento departamento)
         {
             if (id != departamento.DepartamentoID)
             {
@@ -95,6 +115,7 @@ namespace capitulo01.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(departamento);
+
         }
         private bool DepartamentoExists(long? id)
         {
@@ -108,7 +129,11 @@ namespace capitulo01.Controllers
                 return NotFound();
             }
             var departamento = await _context.Departamentos
+                .Include(d => d.Instituicao)
                 .SingleOrDefaultAsync(m => m.DepartamentoID == id);
+                _context.Instituicoes.Where(i => departamento.InstituicaoID == i.InstituicaoID).Load();
+
+
             if (departamento == null)
             {
                 return NotFound();
@@ -124,6 +149,7 @@ namespace capitulo01.Controllers
                 return NotFound();
             }
             var departamento = await _context.Departamentos.SingleOrDefaultAsync(m => m.DepartamentoID == id);
+
             if (departamento == null)
             {
                 return NotFound();
@@ -138,8 +164,9 @@ namespace capitulo01.Controllers
         {
             var departamento = await _context.Departamentos.SingleOrDefaultAsync(m => m.DepartamentoID == id);
             _context.Departamentos.Remove(departamento);
-
+            TempData["Message"] = "Departamento" + departamento.Nome.ToUpper() + "foi removido";
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
     }
