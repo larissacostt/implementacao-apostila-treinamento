@@ -8,7 +8,7 @@
 <div class="card-block">
 
     <div class="card-header text-white bg-danger text-center h1">
-        Registrando uma nova instituiÃ§Ã£o
+        Registrando uma nova instituição
     </div>
 
     <div class="card-body">
@@ -30,23 +30,35 @@
 
             <div class="form-group text-center h3">
                 <input type="submit" 
-                    value="Registrar InstituiÃ§Ãµes" 
+                    value="Registrar Instituições" 
                     class="btn btn-primary" />
 
                 <a asp-action="Index"
                    class="btn btn-info">
-                    Retornar Ã  listagem de instituiÃ§Ãµes
+                    Retornar à listagem de instituições
                 </a>
             </div>
         </form>
     </div>
     <div class="card-footer bg-dark text-center text-white">
-        Informe os dados acima e/ou clique em um dos botÃµes de aÃ§Ã£o
+        Informe os dados acima e/ou clique em um dos botões de ação
     </div>
 </div>
 
+<<<<<<< .mine
 
 @section ScriptPage {
+=======
+<div>
+    <a asp-action="Index">Back to List</a>
+>>>>>>> .theirs
+</div>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");
+<<<<<<< .mine
     }
+
+=======
+@section Scripts{
+    @{await	Html.RenderPartialAsync("_ValidationScriptsPartial");
+>>>>>>> .theirs
 }
