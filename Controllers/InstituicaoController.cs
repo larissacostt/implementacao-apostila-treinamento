@@ -1,7 +1,8 @@
 ﻿using capitulo01.Data;
-using capitulo01.Models;
+using capitulo01.Data.DAL.Cadastros;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Modelo.Cadastros;
 
 namespace capitulo01.Controllers
 {
@@ -9,12 +10,14 @@ namespace capitulo01.Controllers
     public class InstituicaoController : Controller
     {
         private readonly IESContext _context;
+        private readonly InstituicaoDAL instituicaoDAL;
 
         public InstituicaoController(IESContext context)
         {
-            this._context = context;
+            _context = context;
+            instituicaoDAL = new InstituicaoDAL(context);
         }
-
+   
         public static IList<Instituicao> instituicoes =
             new List<Instituicao>()
             {
@@ -39,12 +42,31 @@ namespace capitulo01.Controllers
             };
         public async Task<IActionResult> Index()
         {
+            return View(await instituicaoDAL
+            .ObterInstituicoesClassificadasPorNome()
+            .ToListAsync());
+        }
 
-            return View(await _context.Instituicoes.OrderBy(i => i.Nome).ToListAsync());
+
+        private async Task<IActionResult> ObterVisaoInstituicaoPorId(long? id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+
+            var instituicao = await instituicaoDAL.ObterInstituicaoPorId((long) id);
+            
+            if(instituicao == null)
+            {
+                return NotFound();
+            }
+    
+
+             return View(instituicao);
         }
 
         //GET: Instituicao/Create
-        
         [HttpGet]
         public IActionResult Create()
         {
@@ -62,9 +84,7 @@ namespace capitulo01.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    _context.Add(instituicao);
-                    await _context.SaveChangesAsync();
-
+                    await instituicaoDAL.GravarInstituicao(instituicao);
                     return RedirectToAction(nameof(Index));
                 }
             }
@@ -77,21 +97,11 @@ namespace capitulo01.Controllers
 
 
         //GET: Instituicao/Edit
-        public async Task<IActionResult>Edit(long? id)
+        public async Task<IActionResult> Edit(long? id)
         {
-            if(id == null)
-            {
-                return NotFound();
-            }
-
-            var instituicao = await _context.Instituicoes.SingleOrDefaultAsync(i => i.InstituicaoID == id);
-
-            if(instituicao == null)
-            {
-                return NotFound();
-            }
-            return View(instituicao);
+            return await ObterVisaoInstituicaoPorId(id);
         }
+
 
         //POST: Instituicao/Edit
         [HttpPost]
@@ -105,14 +115,13 @@ namespace capitulo01.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(instituicao);
-                    await _context.SaveChangesAsync();
+                try { 
+             
+                    await  instituicaoDAL.GravarInstituicao(instituicao);
                 }
-                catch (DbUpdateException)
+                catch (DbUpdateConcurrencyException)
                 {
-                    if (!InstituicaoExists(instituicao.InstituicaoID))
+                    if (!await InstituicaoExists(instituicao.InstituicaoID))
                     {
                         return NotFound();
                     }
@@ -130,37 +139,14 @@ namespace capitulo01.Controllers
         // GET: Details
         public async Task<IActionResult> Details(long? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var instituicao = await _context.Instituicoes.SingleOrDefaultAsync(i => i.InstituicaoID == id);
-
-            if (instituicao == null)
-            {
-                return NotFound();
-            }
-
-            return View(instituicao);
+            return await ObterVisaoInstituicaoPorId(id);
         }
 
 
         //GET: Instituicao/Delete
         public async Task<IActionResult> Delete(long? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var instituicao = await _context.Instituicoes.SingleOrDefaultAsync(i => i.InstituicaoID == id);
-            if (instituicao == null)
-            {
-                return NotFound();
-            }
-
-            return View(instituicao);
+            return await ObterVisaoInstituicaoPorId(id);
         }
 
 
@@ -169,27 +155,17 @@ namespace capitulo01.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long? id)
         {
-            var instituicao = await _context.Instituicoes.
-                SingleOrDefaultAsync(m => m.InstituicaoID == id);
-
-            if(instituicao == null)
-            {
-                return NotFound();
-            }
-
-            _context.Instituicoes.Remove(instituicao);
-
-            await _context.SaveChangesAsync();
-
+            var instituicao = await instituicaoDAL.EliminarInstituicaoPorId((long) id);
             TempData["Message"] = "Instituição	" +
                 instituicao.Nome.ToUpper() +
                 "	foi	removida";
 
             return RedirectToAction(nameof(Index));
         }
-        private bool InstituicaoExists(long? id)
+
+        private async Task<bool> InstituicaoExists(long? id)
         {
-            return _context.Instituicoes.Any(e => e.InstituicaoID == id);
+            return await instituicaoDAL.ObterInstituicaoPorId((long)id) != null;
         }
 
     }
