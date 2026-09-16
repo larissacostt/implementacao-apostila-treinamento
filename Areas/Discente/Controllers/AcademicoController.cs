@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Modelo.Discente;
 
-namespace capitulo01.Controllers
+namespace capitulo01.Areas.Discente.Controllers
 {
     public class AcademicoController : Controller
     {

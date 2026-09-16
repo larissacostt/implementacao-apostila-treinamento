@@ -47,18 +47,22 @@
 			<div class="col-3">
 				<nav class="nav	flex-column	bg-transparent" style="margin-left:40px;">
 					<div class="row">
-						<a class="nav-link active" href="#">
+						<a class="nav-link active" asp-area="Cadastros"
+							asp-controller="Instituicao"
+							asp-action="Index">
 							<img src="~/images/university.png" width="30" height="30" alt="">Instituições</a>
 					</div>
 					<div class="row">
-						<a class="nav-link" href="#">
+						<a class="nav-link" asp-area="Cadastros"
+							asp-controller="Departamento"
+							asp-action="Index">
 							<img src="~/images/department.jpg" width="30" height="30" alt="">Departamentos</a>
 					</div>
 					<div class="row">
-						<a class="nav-link" href="#">
-							<img src="~/images/academic.jpg" width="30" height="30" alt="">
-							Acadêmicos
-						</a>
+						<a class="nav-link active" asp-area="Discente"
+							asp-controller="Academico"
+							asp-action="Index">
+							<img src="~/images/academic.jpg" width="30" height="30" alt="">Acadêmicos</a>
 					</div>
 				</nav>
 			</div>

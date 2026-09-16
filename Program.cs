@@ -1,5 +1,6 @@
 using capitulo01.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileSystemGlobbing.Internal.Patterns;
 
 //cria o objeto que vai montar a aplicação
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +30,9 @@ app.MapControllerRoute(
             name: "default",
             pattern: "{Controller=Home}/{action=Index}/{id?}")
             .WithStaticAssets();
+endoipoints.MapControllerRoute(
+    name: "areaRoute",
+    PatternBuilder: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 app.Run();
 
     

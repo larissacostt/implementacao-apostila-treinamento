@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using capitulo01.Data.DAL.Cadastros;
 
-namespace capitulo01.Controllers
+namespace capitulo01.Areas.Cadastros.Controllers
 {
     public class DepartamentoController : Controller
     {
