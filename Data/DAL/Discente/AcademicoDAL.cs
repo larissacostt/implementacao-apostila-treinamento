@@ -23,7 +23,7 @@ namespace capitulo01.Data.DAL.Discente
 
         public async Task<Academico> GravarAcademico(Academico academico)
         {
-            if(academico == null)
+            if(academico.AcademicoID == null)
             {
                 _context.Academicos.Add(academico);
             }

@@ -1,41 +1,35 @@
-@model IEnumerable<Modelo.Discente.Academico>
-
+﻿@model IEnumerable<Modelo.Discente.Academico>
 @{
     Layout = "_LayoutIES";
 }
 
-@section Styles
-{
+@section Styles {
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/datatables/css/jquery.dataTables.css" />
     </environment>
-
     <environment exclude="Development">
-        <link rel="stylesheet"
-              href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css"
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css"
               asp-fallback-href="~/lib/datatables/css/jquery.dataTables.css"
-              asp-fallback-test-class="sr-only"
-              asp-fallback-test-property="position"
               asp-fallback-test-value="absolute" />
     </environment>
 }
-
-@if (TempData["Message"] != null)
+@if (@TempData["Message"] != null)
 {
-    <div class="alert alert-success" role="alert">
+    <div class="alert	alert-success" role="alert">
         @TempData["Message"]
     </div>
 }
-
 <div class="card-block">
-    <div class="card-header text-white bg-primary text-center h1">
-        Acadêmicos Registrados
+    <div class="card-header	text-white	bg-primary	text-center	h1">
+        Acadêmicos	Registrados
     </div>
-
     <div class="card-body">
         <table id="tabela_academicos">
             <thead>
                 <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AcademicoID)
+                    </th>
                     <th>
                         @Html.DisplayNameFor(model => model.RegistroAcademico)
                     </th>
@@ -48,11 +42,14 @@
                     <th></th>
                 </tr>
             </thead>
-
             <tbody>
                 @foreach (var item in Model)
                 {
                     <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AcademicoID)
+                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.RegistroAcademico)
                         </td>
@@ -63,45 +60,32 @@
                             @Html.DisplayFor(modelItem => item.Nascimento)
                         </td>
                         <td>
-                            <a asp-action="Edit"
-                               asp-route-id="@item.AcademicoID">Edit</a> |
-
-                            <a asp-action="Details"
-                               asp-route-id="@item.AcademicoID">Details</a> |
-
-                            <a asp-action="Delete"
-                               asp-route-id="@item.AcademicoID">Delete</a>
+                            <a asp-action="Edit" asp-route-id="@item.AcademicoID">Edit</a>	|
+                            <a asp-action="Details" asp-route-id="@item.AcademicoID">Details</a>	|
+                            <a asp-action="Delete" asp-route-id="@item.AcademicoID">Delete</a>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
-
-    <div class="card-footer bg-success text-center">
-        <a asp-action="Create" class="btn-success">
-            Criar um novo acadêmico
-        </a>
+    <div class="card-footer	bg-success	text-center">
+        <a asp-action="Create" class="btn-success"> Criar um novo acadêmico</a>
     </div>
 </div>
 
-@section ScriptPage
-{
+@section ScriptPage {
     <environment include="Development">
-        <script src="~/lib/datatables/js/jquery.dataTables.js"></script>
+        <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
     </environment>
-
     <environment exclude="Development">
         <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.js"
                 asp-fallback-src="~/lib/datatables/js/jquery.dataTables.js">
         </script>
     </environment>
-
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#tabela_academicos').DataTable({
-                "order": [[1, "asc"]]
-            });
+            $('#tabela_academicos').DataTable({"order":	[[1,"asc"]]});
         });
     </script>
 }
