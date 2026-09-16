@@ -6,7 +6,8 @@ using Modelo.Cadastros;
 
 namespace capitulo01.Areas.Cadastros.Controllers
 {
-   
+
+    [Area("Cadastro")]
     public class InstituicaoController : Controller
     {
         private readonly IESContext _context;

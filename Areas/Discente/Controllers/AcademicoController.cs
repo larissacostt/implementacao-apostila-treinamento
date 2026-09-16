@@ -6,6 +6,8 @@ using Modelo.Discente;
 
 namespace capitulo01.Areas.Discente.Controllers
 {
+
+    [Area("Cadastro")]
     public class AcademicoController : Controller
     {
         private readonly IESContext _context;

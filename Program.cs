@@ -27,10 +27,11 @@ app.UseAuthorization();
 app.MapStaticAssets();
 
 app.MapControllerRoute(
-            name: "default",
-            pattern: "{Controller=Home}/{action=Index}/{id?}")
-            .WithStaticAssets();
-endoipoints.MapControllerRoute(
+    name: "default",
+    pattern: "{Controller=Home}/{action=Index}/{id?}")
+    .WithStaticAssets();
+
+app.MapControllerRoute(
     name: "areaRoute",
     PatternBuilder: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 app.Run();
