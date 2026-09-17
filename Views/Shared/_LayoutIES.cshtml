@@ -35,7 +35,7 @@
 				<div>
 					<ul class="nav	navbar-nav	navbar-light">
 						<li class="navbar-brand"> 
-							&nbsp;&nbsp;&nbsp;ASP.NET	Core MVC
+							&nbsp;&nbsp;&nbsp;ASP.NET Core MVC
 						</li>
 					</ul>
 				</div>
@@ -43,23 +43,38 @@
 		</div>
 	</nav>
 	<div class="container" style="margin-top: 20px;">
+		<div clas="row" style="text-align:right">
+			<div class="col-12">
+				@if (SignInManager.IsSignedIn(User))
+					{
+						<div>Olá @UserManager.GetUserName(User), seja bem-vindo(a) / @Html.ActionLink("Logout", "Sair", "Infra", new { area = "" })</div>
+					}
+					else
+					{
+						<a class="nav-item nav-link"
+						asp-area="" 
+						asp-controller="Infra" 
+						asp-action="Acessar">Informar usuário/senha para acessar</a>
+					}
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-3">
 				<nav class="nav	flex-column	bg-transparent" style="margin-left:40px;">
 					<div class="row">
-						<a class="nav-link active" asp-area="Cadastros"
+						<a class="nav-item nav-link" asp-area="Cadastros"
 							asp-controller="Instituicao"
 							asp-action="Index">
 							<img src="~/images/university.png" width="30" height="30" alt="">Instituições</a>
 					</div>
 					<div class="row">
-						<a class="nav-link" asp-area="Cadastros"
+						<a class="nav-item nav-link active" asp-area="Cadastros"
 							asp-controller="Departamento"
 							asp-action="Index">
 							<img src="~/images/department.jpg" width="30" height="30" alt="">Departamentos</a>
 					</div>
 					<div class="row">
-						<a class="nav-link active" asp-area="Discente"
+						<a class="nav-item nav-link" asp-area="Discente"
 							asp-controller="Academico"
 							asp-action="Index">
 							<img src="~/images/academic.jpg" width="30" height="30" alt="">Acadêmicos</a>

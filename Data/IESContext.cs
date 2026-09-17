@@ -1,10 +1,12 @@
 ﻿using Modelo.Cadastros;
 using Microsoft.EntityFrameworkCore;
 using Modelo.Discente;
+using capitulo01.Models.Infra;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace capitulo01.Data
 {
-    public class IESContext : DbContext
+    public class IESContext : IdentityDbContext<UsuarioDaAplicacao>
     {
 
         // passa o construtor e diz as configurações que a EF vai usar
@@ -38,12 +40,10 @@ namespace capitulo01.Data
                  .HasForeignKey(d => d.DisciplinaID);
 
 
-
             modelBuilder.Entity<Departamento>().ToTable("Departamento");
             modelBuilder.Entity<Instituicao>().ToTable("Instituicao");
             // configura a entidade departamento e como deve ser mapeada
         }
-
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

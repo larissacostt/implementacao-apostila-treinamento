@@ -1,5 +1,6 @@
 ﻿using capitulo01.Data;
 using capitulo01.Data.DAL.Cadastros;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Modelo.Cadastros;
@@ -7,7 +8,8 @@ using Modelo.Cadastros;
 namespace capitulo01.Areas.Cadastros.Controllers
 {
 
-    [Area("Cadastro")]
+    [Area("Cadastros")]
+    [Authorize]
     public class InstituicaoController : Controller
     {
         private readonly IESContext _context;

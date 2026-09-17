@@ -7,7 +7,7 @@ using capitulo01.Data.DAL.Cadastros;
 
 namespace capitulo01.Areas.Cadastros.Controllers
 {
-    [Area("Cadastro")]
+    [Area("Cadastros")]
     public class DepartamentoController : Controller
     {
         private readonly IESContext _context;
