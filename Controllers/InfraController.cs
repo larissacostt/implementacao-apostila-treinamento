@@ -69,7 +69,7 @@ namespace capitulo01.Controllers
         public async Task<IActionResult> Sair()
         {
             await _signInManager.SignOutAsync();
-            _logger.LogInformation("Usuário	realizou	logout.");
+            _logger.LogInformation("Usuário	realizou logout.");
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
