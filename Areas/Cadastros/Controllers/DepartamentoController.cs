@@ -30,30 +30,48 @@ namespace capitulo01.Areas.Cadastros.Controllers
         public IActionResult Create()
         {
             var instituicoes = instituicaoDAL.ObterInstituicoesClassificadasPorNome().ToList();
-            instituicoes.Insert(0, new Instituicao()   {   
-                InstituicaoID =   0,  Nome    =   "Selecione	a	instituição"   });
-            ViewBag.Instituicoes = instituicoes;
-            return View();
+            instituicoes.Insert(0, new Instituicao(){
+                InstituicaoID = 0,  Nome= "Selecione a instituição" });
+                ViewBag.Instituicoes = instituicoes;
+                return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Nome,InstituicaoID")] Departamento departamento)
+        public async Task<IActionResult> Create([Bind("Nome, InstituicaoID")] Departamento departamento)
         {
+
             try
             {
+
                 if (ModelState.IsValid)
                 {
                     await departamentoDAL.GravarDepartamento(departamento);
                     return RedirectToAction(nameof(Index));
                 }
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                ModelState.AddModelError(" ", "Não foi possível inserir dados");
+                ModelState.AddModelError(
+                    "",
+                    ex.InnerException?.Message ?? ex.Message);
             }
+
+            var instituicoes = instituicaoDAL
+                .ObterInstituicoesClassificadasPorNome()
+                .ToList();
+
+            instituicoes.Insert(0, new Instituicao()
+            {
+                InstituicaoID = 0,
+                Nome = "Selecione a instituição"
+            });
+
+            ViewBag.Instituicoes = instituicoes;
+
             return View(departamento);
         }
+
 
         public async Task<IActionResult> Edit (long? id)
         {
