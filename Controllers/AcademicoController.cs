@@ -90,7 +90,7 @@ namespace capitulo01.Controllers
         public async Task<IActionResult> Edit(
             long? id,
             [Bind("AcademicoID,Nome,RegistroAcademico,Nascimento")]
-            Academico academico)
+            Academico academico, IFormFile foto)
         {
             if (id != academico.AcademicoID)
             {
@@ -101,6 +101,11 @@ namespace capitulo01.Controllers
             {
                 try
                 {
+                    var stream = new MemoryStream();
+                    await foto.CopyToAsync(stream);
+                    academico.FotoMimeType = foto.ContentType;
+                    academico.Foto = stream.ToArray();
+
                     await academicoDAL.GravarAcademico(academico);
                 }
                 catch (DbUpdateConcurrencyException)
