@@ -1,5 +1,8 @@
 using capitulo01.Data;
+using capitulo01.Models.Infra;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+
 
 //cria o objeto que vai montar a aplicação
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +12,17 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<IESContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("IESConnection"))); //procura a conexao chamada
+
+builder.Services.AddIdentity<UsuarioDaAplicacao, IdentityRole>()
+    .AddEntityFrameworkStores<IESContext>()
+    .AddDefaultTokenProviders();
+
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Infra/Acessar";
+    options.AccessDeniedPath = "/Infra/AcessoNegado";
+});
 
 var app = builder.Build(); //pega a configuração e monta a aplicação
 
@@ -21,7 +35,9 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapStaticAssets();
 

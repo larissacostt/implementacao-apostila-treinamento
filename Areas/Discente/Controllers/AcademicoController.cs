@@ -1,13 +1,20 @@
 ﻿using capitulo01.Data;
 using capitulo01.Data.DAL.Discente;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Modelo.Discente;
 
-namespace capitulo01.Controllers
+namespace capitulo01.Areas.Discente.Controllers
 {
+<<<<<<< HEAD:Controllers/AcademicoController.cs
     [Area("Discente")]
+=======
+
+    [Area("Discente")]
+    [Authorize]
+>>>>>>> origin/capitulo07:Areas/Discente/Controllers/AcademicoController.cs
     public class AcademicoController : Controller
     {
         private readonly IESContext _context;
