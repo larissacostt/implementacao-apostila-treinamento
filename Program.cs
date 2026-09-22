@@ -26,10 +26,15 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 var app = builder.Build(); //pega a configuração e monta a aplicação
 
+app.UseStatusCodePagesWithReExecute("/Home/Error/{0}");
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+
+    
+
     app.UseHsts();
 }
 app.UseHttpsRedirection();
@@ -50,6 +55,3 @@ app.MapControllerRoute(
             pattern: "{Controller=Home}/{action=Index}/{id?}")
             .WithStaticAssets();
 app.Run();
-
-    
-

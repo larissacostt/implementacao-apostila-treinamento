@@ -8,13 +8,8 @@ using Modelo.Discente;
 
 namespace capitulo01.Areas.Discente.Controllers
 {
-<<<<<<< HEAD:Controllers/AcademicoController.cs
-    [Area("Discente")]
-=======
-
     [Area("Discente")]
     [Authorize]
->>>>>>> origin/capitulo07:Areas/Discente/Controllers/AcademicoController.cs
     public class AcademicoController : Controller
     {
         private readonly IESContext _context;
@@ -117,7 +112,7 @@ namespace capitulo01.Areas.Discente.Controllers
         public async Task<IActionResult> Edit(
             long? id,
             [Bind("AcademicoID,Nome,RegistroAcademico,Nascimento")]
-            Academico academico, IFormFile foto)
+            Academico academico, IFormFile foto, string chRemoverFoto)
         {
             if (id != academico.AcademicoID)
             {
@@ -129,9 +124,18 @@ namespace capitulo01.Areas.Discente.Controllers
                 try
                 {
                     var stream = new MemoryStream();
-                    await foto.CopyToAsync(stream);
-                    academico.FotoMimeType = foto.ContentType;
-                    academico.Foto = stream.ToArray();
+
+                    if (chRemoverFoto != null)
+                    {
+                        academico.Foto = null;
+                    }
+                    else
+                    {
+                        await foto.CopyToAsync(stream);
+                        academico.Foto = stream.ToArray();
+                        academico.FotoMimeType = foto.ContentType;
+                        
+                    }
 
                     await academicoDAL.GravarAcademico(academico);
                 }

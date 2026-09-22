@@ -18,8 +18,15 @@ namespace capitulo01.Controllers
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [Route("Home/Error/{id?}")]
+        public IActionResult Error(int? id)
         {
+            if (id == 404)
+            {
+                ViewBag.ErrorMessage = "A página ou recurso solicitado não foi encontrado.";
+                ViewBag.StatusCode = 404;
+                return View("NotFound"); // Vai procurar a View NotFound.cshtml
+            }
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
