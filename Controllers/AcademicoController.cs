@@ -2,18 +2,21 @@
 using capitulo01.Data.DAL.Discente;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Modelo.Discente;
 
 namespace capitulo01.Controllers
 {
+    [Area("Discente")]
     public class AcademicoController : Controller
     {
         private readonly IESContext _context;
         private readonly AcademicoDAL academicoDAL;
-
-        public AcademicoController(IESContext context)
+        private IWebHostEnvironment _env;
+        public AcademicoController(IESContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
             academicoDAL = new AcademicoDAL(context);
         }
 
@@ -65,21 +68,38 @@ namespace capitulo01.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(
-            [Bind("Nome,RegistroAcademico,Nascimento")] Academico academico)
+        public async Task<IActionResult> Create([Bind("Nome,RegistroAcademico,Nascimento")] Academico academico)
         {
             try
             {
-                if (ModelState.IsValid)
+                 if (ModelState.IsValid)
                 {
                     await academicoDAL.GravarAcademico(academico);
 
                     return RedirectToAction(nameof(Index));
                 }
+                else
+                {
+                    foreach (var item in ModelState)
+                    {
+                        foreach (var erro in item.Value.Errors)
+                        {
+                            Console.WriteLine(
+                                $"{item.Key}: {erro.ErrorMessage}"
+                            );
+                        }
+                    }
+                }
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                ModelState.AddModelError("", "Não foi possível inserir os dados.");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.InnerException?.Message);
+
+                ModelState.AddModelError(
+                    "",
+                    "Não foi possível inserir os dados."
+                );
             }
 
             return View(academico);
@@ -153,6 +173,20 @@ namespace capitulo01.Controllers
                 return File(academico.Foto, academico.FotoMimeType);
             }
             return null;
+        }
+
+        public async Task<FileResult> DownloadFoto(long id)
+        {
+            Academico academico = await academicoDAL.ObterAcademicoPorId(id);
+            
+            string nomeArquivo = "Foto" + academico.AcademicoID.ToString().Trim() + ".jpg";
+            FileStream fileStream = new FileStream(System.IO.Path.Combine(_env.WebRootPath, nomeArquivo), FileMode.Create, FileAccess.Write);
+            fileStream.Write(academico.Foto, 0, academico.Foto.Length);
+            fileStream.Close();
+            IFileProvider provider = new PhysicalFileProvider(_env.WebRootPath);
+            IFileInfo fileInfo = provider.GetFileInfo(nomeArquivo);
+            var readStream = fileInfo.CreateReadStream();
+            return File(readStream, academico.FotoMimeType, nomeArquivo);
         }
     }
 }

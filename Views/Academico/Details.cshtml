@@ -5,7 +5,8 @@
 @section Styles
 {
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/font-awesome/css/fontawesome.css" />
+        <link rel="stylesheet" 
+            href="~/lib/font-awesome/css/font-awesome.css" />
     </environment>
 
     <environment exclude="Development">
@@ -32,7 +33,7 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                <i class="fa fa-key" aria-hidden="true"></i>
+                                <i class="fas fa-key"></i>
                             </span>
                         </div>
                         <input asp-for="AcademicoID"
@@ -44,7 +45,7 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                <i class="fa fa-address-card-o" aria-hidden="true"></i>
+                                <i class="fas fa-address-card"></i>
                             </span>
                         </div>
                         <input asp-for="RegistroAcademico"
@@ -57,7 +58,7 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                <i class="fas fa-user-circle"></i>
                             </span>
                         </div>
 
@@ -70,7 +71,7 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                <i class="fa fa-address-card-o" aria-hidden="true"></i>
+                                <i class="fas fa-calendar-alt"></i>
                             </span>
                         </div>
                         <input asp-for="Nascimento"
@@ -102,9 +103,7 @@
            class="btn btn-warning"
            asp-route-id="@Model.AcademicoID">
             Alterar
-        </a>
-
-        |
+        </a> |
 
         <a asp-action="Index"
            class="btn btn-warning">
