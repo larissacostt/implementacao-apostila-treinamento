@@ -1,4 +1,5 @@
-﻿using Modelo.Discente;
+﻿using Microsoft.Extensions.FileProviders;
+using Modelo.Discente;
 
 namespace capitulo01.Data.DAL.Discente
 {
@@ -44,5 +45,7 @@ namespace capitulo01.Data.DAL.Discente
             return academico;
         }
 
+
     }
+
 }

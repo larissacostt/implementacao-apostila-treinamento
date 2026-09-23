@@ -260,6 +260,12 @@ namespace capitulo01.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("AcademicoID"));
 
+                    b.Property<byte[]>("Foto")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("FotoMimeType")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("Nascimento")
                         .HasColumnType("datetime2");
 
