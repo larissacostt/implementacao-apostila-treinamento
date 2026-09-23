@@ -1,5 +1,6 @@
 using capitulo01.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Diagnostics;
 
 namespace capitulo01.Controllers
@@ -18,16 +19,20 @@ namespace capitulo01.Controllers
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        [Route("Home/Error/{id?}")]
-        public IActionResult Error(int? id)
+        public IActionResult Error(int? statusCode = null)
+
         {
-            if (id == 404)
-            {
-                ViewBag.ErrorMessage = "A página ou recurso solicitado não foi encontrado.";
-                ViewBag.StatusCode = 404;
-                return View("NotFound"); // Vai procurar a View NotFound.cshtml
+            if (statusCode.HasValue)
+           {
+               if (statusCode == 404 || statusCode == 500)
+               {
+                   var viewName = $"Error{statusCode.ToString()}";
+                   return View(viewName);
+               }
             }
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+
+           return View(new ErrorViewModel { 
+               RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
