@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Modelo.Discente;
 using capitulo01.Models.Infra;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Modelo.Docente;
+
 
 namespace capitulo01.Data
 {
@@ -20,8 +22,9 @@ namespace capitulo01.Data
         public DbSet<Curso> Cursos { get; set; }
         public DbSet<Disciplina> Disciplinas { get; set; }
         public DbSet<Academico> Academicos { get; set; }
-
-        
+        public DbSet<Professor> Professores { get; set; }
+        public DbSet<CursoProfessor> CursosProfessores { get; set; }
+      
         //como as classes vao ser mapeadas no banco de dados
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -37,7 +40,20 @@ namespace capitulo01.Data
             modelBuilder.Entity<CursoDisciplina>()
                 .HasOne(d => d.Disciplina)
                 .WithMany(cd => cd.CursosDisciplinas)
-                 .HasForeignKey(d => d.DisciplinaID);
+                .HasForeignKey(d => d.DisciplinaID);
+
+            modelBuilder.Entity<CursoProfessor>()
+                .HasKey(cd => new { cd.CursoID, cd.ProfessorID });
+
+            modelBuilder.Entity<CursoProfessor>()
+                .HasOne(c => c.Curso)
+                .WithMany(cd => cd.CursosProfessores)
+                .HasForeignKey(c => c.CursoID);
+
+            modelBuilder.Entity<CursoProfessor>()
+                .HasOne(d => d.Professor)
+                .WithMany(cd => cd.CursosProfessores)
+                .HasForeignKey(d => d.ProfessorID);
 
 
             modelBuilder.Entity<Departamento>().ToTable("Departamento");
@@ -49,5 +65,7 @@ namespace capitulo01.Data
         {
             optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQllocaldb;Database = IESCasaDoCodigo; Trusted_Connection = True");
         }
+
+
     }
 }

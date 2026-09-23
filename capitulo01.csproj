@@ -20,6 +20,7 @@
 	</ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Cadastros\Views\Docente\" />
     <Folder Include="wwwroot\lib\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
