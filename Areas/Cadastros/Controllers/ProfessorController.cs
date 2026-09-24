@@ -71,7 +71,7 @@ namespace capitulo01.Areas.Controllers
             {
                 cursoDAL.RegistrarProfessor((long)model.CursoID, (long)model.ProfessorID);
                 PrepararViewBags(instituicaoDAL.ObterInstituicoesClassificadasPorNome().ToList(),
-                    departamentoDAL.ObterDepartamentoPorIntsituicao((long)model.InstituicaoID).ToList(),
+                    departamentoDAL.ObterDepartamentoPorIntsituicao((long)model.InstituicaoID),
                     cursoDAL.ObterCursosPorDepartamento((long)model.DepartamentoID).ToList(),
                     cursoDAL.ObterProfessoresForaDoCurso((long)model.CursoID).ToList());
             }
