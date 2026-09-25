@@ -13,11 +13,6 @@ namespace capitulo01.Data.DAL.Cadastros
         {
             _context = context;
         }
-        public IQueryable<Departamento> ObterDepartamentosPorInstituicao(long instituicaoID)
-        {
-            var departamentos = _context.Departamentos.Where(d => d.InstituicaoID == instituicaoID).OrderBy(d => d.Nome);
-            return departamentos;
-        }
 
         public IQueryable<Curso> ObterCursosPorDepartamento(long departamentoID)
         {

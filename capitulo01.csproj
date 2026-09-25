@@ -20,8 +20,6 @@
 	</ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Cadastros\Views\Docente\" />
-    <Folder Include="Areas\Cadastros\Views\Professor\" />
     <Folder Include="wwwroot\lib\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>

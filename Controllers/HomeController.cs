@@ -1,6 +1,5 @@
 using capitulo01.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Diagnostics;
 
 namespace capitulo01.Controllers
@@ -16,7 +15,7 @@ namespace capitulo01.Controllers
         public IActionResult Privacy()
         {
             return View();
-        }
+        }   
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error(int? statusCode = null)
