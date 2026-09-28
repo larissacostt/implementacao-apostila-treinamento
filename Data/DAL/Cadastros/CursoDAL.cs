@@ -38,5 +38,18 @@ namespace capitulo01.Data.DAL.Cadastros
             });
             _context.SaveChanges();
         }
+        public async Task GravarCurso(Curso curso)
+        {
+            if (curso.CursoID == null)
+            {
+                _context.Cursos.Add(curso);
+            }
+            else
+            {
+                _context.Cursos.Update(curso);
+            }
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

@@ -24,7 +24,7 @@ namespace capitulo01.Data
         public DbSet<Academico> Academicos { get; set; }
         public DbSet<Professor> Professores { get; set; }
         public DbSet<CursoProfessor> CursosProfessores { get; set; }
-      
+
         //como as classes vao ser mapeadas no banco de dados
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -54,6 +54,15 @@ namespace capitulo01.Data
                 .HasOne(d => d.Professor)
                 .WithMany(cd => cd.CursosProfessores)
                 .HasForeignKey(d => d.ProfessorID);
+
+            modelBuilder.Entity<Curso>()
+                .Property(c => c.DepartamentoID)
+                .HasColumnName("DepartamentoID");
+
+            modelBuilder.Entity<Curso>()
+                .HasOne(c => c.Departamento)
+                .WithMany(d => d.Cursos)
+                .HasForeignKey(c => c.DepartamentoID);
 
 
             modelBuilder.Entity<Departamento>().ToTable("Departamento");
