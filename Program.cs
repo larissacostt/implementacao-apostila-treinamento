@@ -24,6 +24,9 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/Infra/AcessoNegado";
 });
 
+builder.Services.AddSession();
+builder.Services.AddDistributedMemoryCache();
+
 var app = builder.Build(); //pega a configuração e monta a aplicação
 
 if (!app.Environment.IsDevelopment())
@@ -38,6 +41,8 @@ app.UseStatusCodePagesWithReExecute(
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseSession();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -51,5 +56,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{Controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
+
+
 
 app.Run();
