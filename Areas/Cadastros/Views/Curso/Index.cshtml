@@ -4,4 +4,53 @@
     Layout = "_LayoutIES";
 }
 
-<h1>Lista de Cursos</h1>
+<div class="card-block">
+
+    <div class="card-header text-white bg-primary text-center h1">
+        Cursos Registrados
+    </div>
+
+    <div class="card-body">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CursoID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nome)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DepartamentoID)
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CursoID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nome)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DepartamentoID)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="card-footer bg-success text-center">
+        <a asp-action="Create" class="btn-success">
+            Criar um novo curso
+        </a>
+    </div>
+
+</div>
