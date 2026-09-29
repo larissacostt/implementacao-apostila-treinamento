@@ -36,8 +36,16 @@ namespace capitulo01.Areas.Docente.Controllers
 
         public IActionResult Create()
         {
+            return View(await professorDAL
+            .ObterProfessoresClassificadosPorNome()
+            .ToListAsync());
+        }
+
+        public IActionResult Create()
+        {
             return View();
         }
+
 
         public void PrepararViewBags(List<Instituicao> instituicoes, List<Departamento> departamentos, List<Curso> cursos, List<Professor> professores)
         {
