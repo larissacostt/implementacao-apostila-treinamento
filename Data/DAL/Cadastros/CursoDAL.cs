@@ -27,6 +27,11 @@ namespace capitulo01.Data.DAL.Cadastros
             return professoresForaDoCurso;
         }
 
+        public IQueryable<Curso> ObterCursosClassificadosPorNome()
+        {
+            return _context.Cursos.OrderBy(c => c.Nome);
+        }
+
         public void RegistrarProfessor(long cursoID, long professorID)
         {
             var curso = _context.Cursos.Where(c => c.CursoID == cursoID).Include(cp => cp.CursosProfessores).First();

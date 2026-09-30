@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using Modelo.Cadastros;
 using Modelo.Docente;
 using Newtonsoft.Json;
-using System.Security.Cryptography;
 using Departamento = Modelo.Cadastros.Departamento;
 using Instituicao = Modelo.Cadastros.Instituicao;
 
@@ -34,11 +33,11 @@ namespace capitulo01.Areas.Docente.Controllers
             professorDAL = new ProfessorDAL(context);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Index()
         {
             return View(await professorDAL
-            .ObterProfessoresClassificadosPorNome()
-            .ToListAsync());
+                .ObterProfessoresClassificadosPorNome()
+                .ToListAsync());
         }
 
         public IActionResult Create()
@@ -46,6 +45,19 @@ namespace capitulo01.Areas.Docente.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Professor professor)
+        {
+
+            if (ModelState.IsValid)
+            {
+                await professorDAL.GravarProfessor(professor);
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(professor);
+        }
 
         public void PrepararViewBags(List<Instituicao> instituicoes, List<Departamento> departamentos, List<Curso> cursos, List<Professor> professores)
         {

@@ -23,7 +23,7 @@ namespace capitulo01.Areas.Cadastros.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await cursoDAL
-                .ObterCursosPorDepartamento(1)
+                .ObterCursosClassificadosPorNome()
                 .ToListAsync());
         }
 

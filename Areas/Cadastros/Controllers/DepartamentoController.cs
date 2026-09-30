@@ -26,14 +26,18 @@ namespace capitulo01.Areas.Cadastros.Controllers
             return View(await departamentoDAL.ObterDepartamentosClassifidosPorNome().ToListAsync());
         }
 
-
         public IActionResult Create()
         {
             var instituicoes = instituicaoDAL.ObterInstituicoesClassificadasPorNome().ToList();
+
             instituicoes.Insert(0, new Instituicao(){
-                InstituicaoID = 0,  Nome= "Selecione a instituição" });
-                ViewBag.Instituicoes = instituicoes;
-                return View();
+
+                InstituicaoID = 0,  
+                Nome= "Selecione a instituição" 
+            });
+
+            ViewBag.Instituicoes = instituicoes;
+            return View();
         }
 
         [HttpPost]
@@ -43,6 +47,13 @@ namespace capitulo01.Areas.Cadastros.Controllers
 
             try
             {
+                foreach (var item in ModelState)
+                {
+                    foreach (var error in item.Value.Errors)
+                    {
+                        Console.WriteLine($"{item.Key}: {error.ErrorMessage}");
+                    }
+                }
 
                 if (ModelState.IsValid)
                 {

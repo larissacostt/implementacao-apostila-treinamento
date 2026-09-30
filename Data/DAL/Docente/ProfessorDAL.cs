@@ -17,12 +17,6 @@ namespace capitulo01.Data.DAL.Docente
                 .OrderBy(p => p.Nome);
         }
 
-        public IQueryable<Professor> ObterProfessoresClassificadosPorNome()
-        {
-            return _context.Professores
-                .OrderBy(p => p.Nome);
-        }
-
         public async Task<Professor> GravarProfessor(Professor professor)
         {
             if (professor.ProfessorID == null)
