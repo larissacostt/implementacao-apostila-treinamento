@@ -145,6 +145,23 @@ namespace capitulo01.Areas.Docente.Controllers
             }
             return View(cursosProfessor);
         }
+        public async Task<IActionResult> Details(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var professor = await _context.Professores
+                .FirstOrDefaultAsync(p => p.ProfessorID == id);
+
+            if (professor == null)
+            {
+                return NotFound();
+            }
+
+            return View(professor);
+        }
 
         public JsonResult ObterDepartamentosPorInstituicao(long actionID)
         {

@@ -48,8 +48,16 @@
         </dl>
 
     </div>
-
+    
     <div class="card-footer bg-info text-center text-white">
+
+    <div class="col-3 d-flex flex-column align-items-center justify-content-center">
+
+        <img class="img-thumbnail"
+             src="@Url.Action("GetFoto", "Professor",
+                 new { area = "Docente", id = Model.ProfessorID })" />
+
+        <br />
 
         <a asp-action="Edit"
            class="btn btn-warning"
@@ -61,6 +69,14 @@
            class="btn btn-warning">
             Retornar à listagem de professores
         </a>
+
+        @Html.ActionLink(
+            "Download",
+            "DownloadFoto",
+            "Professor",
+            new { area = "Docente", id = Model.ProfessorID },
+            null
+        )
 
     </div>
 
