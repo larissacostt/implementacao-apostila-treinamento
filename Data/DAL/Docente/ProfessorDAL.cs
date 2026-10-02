@@ -16,6 +16,10 @@ namespace capitulo01.Data.DAL.Docente
             return _context.Professores
                 .OrderBy(p => p.Nome);
         }
+        public async Task<Professor> ObterProfessorPorId(long id)
+        {
+            return await _context.Professores.FindAsync(id);
+        }
 
         public async Task<Professor> GravarProfessor(Professor professor)
         {
@@ -32,5 +36,6 @@ namespace capitulo01.Data.DAL.Docente
 
             return professor;
         }
+        
     }
 }

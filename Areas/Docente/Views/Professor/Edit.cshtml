@@ -4,42 +4,56 @@
     Layout = "_LayoutIES";
 }
 
-@section Styles{
-    <environment include="Development">
-        <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/font-awesome.min.css"
-              asp-fallback-href="~/lib/font-awesome/css/all.css"
-              asp-fallback-test-class="sr-only"
-              asp-fallback-test-property="position"
-              asp-fallback-test-value="absolute"/>
-    </environment>
-}
+<div class="card">
 
-<div class="card-block">
-
-    <div class="card-header text-white bg-secondary text-center h1">
-        Exibindo um professor
+    <div class="card-header bg-secondary text-white text-center">
+        <h1>Alterar professor</h1>
     </div>
 
-    @{
-        await Html.RenderPartialAsync(
-            "~/Views/Departamento/_PartialDetailsContentCard.cshtml",
-            Model);
-    }
+    <div class="card-body">
 
-    <div class="card-footer bg-info text-center text-white">
-        <a asp-action="Edit"
-           class="btn btn-warning"
-           asp-route-id="@Model.ProfessorID">
-            Alterar
-        </a> |
+        <form asp-action="Edit" method="post">
 
-        <a asp-action="Index"
-           class="btn btn-warning">
-            Retornar à listagem de departamentos
-        </a>
+            <input type="hidden" asp-for="ProfessorID" />
+
+            <div class="form-group">
+                <label asp-for="Nome" class="control-label">
+                    Nome do professor
+                </label>
+
+                <input asp-for="Nome"
+                       class="form-control"
+                       placeholder="Digite o nome do professor" />
+
+                <span asp-validation-for="Nome"
+                      class="text-danger">
+                </span>
+            </div>
+
+            <br />
+
+            <div class="text-center">
+
+                <button type="submit"
+                        class="btn btn-success">
+                    Salvar alterações
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+                    Cancelar
+                </a>
+
+            </div>
+
+        </form>
+
     </div>
 
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

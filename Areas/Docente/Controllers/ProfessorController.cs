@@ -1,6 +1,7 @@
 ﻿using capitulo01.Areas.Cadastros.Models;
 using capitulo01.Data;
 using capitulo01.Data.DAL.Cadastros;
+using capitulo01.Data.DAL.Discente;
 using capitulo01.Data.DAL.Docente;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -108,13 +109,19 @@ namespace capitulo01.Areas.Docente.Controllers
         }
         public void RegistrarProfessor(long cursoID, long professorID)
         {
-            var curso = _context.Cursos.Where(c => c.CursoID == cursoID).Include(cp => cp.CursosProfessores).First();
+            var curso = _context.Cursos
+                .Where(c => c.CursoID == cursoID)
+                .Include(cp => cp.CursosProfessores)
+                .First();
+
             var professor = _context.Professores.Find(professorID);
+
             curso.CursosProfessores.Add(new CursoProfessor()
             {
                 Curso = curso,
                 Professor = professor
             });
+
             _context.SaveChanges();
         }
 
@@ -129,7 +136,7 @@ namespace capitulo01.Areas.Docente.Controllers
             string cursosProfessoresSession = HttpContext.Session.GetString("cursosProfessores");
             if (cursosProfessoresSession != null)
             {
-                cursosProfessor = JsonConvert.DeserializeObject < List < CursoProfessor >> (cursosProfessoresSession);
+                cursosProfessor = JsonConvert.DeserializeObject<List<CursoProfessor>>(cursosProfessoresSession);
             }
             cursosProfessor.Add(cursoProfessor);
             HttpContext.Session.SetString("cursosProfessores", JsonConvert.SerializeObject(cursosProfessor));
@@ -141,7 +148,7 @@ namespace capitulo01.Areas.Docente.Controllers
             string cursosProfessoresSession = HttpContext.Session.GetString("cursosProfessores");
             if (cursosProfessoresSession != null)
             {
-                cursosProfessor = JsonConvert.DeserializeObject < List < CursoProfessor >> (cursosProfessoresSession);
+                cursosProfessor = JsonConvert.DeserializeObject<List<CursoProfessor>>(cursosProfessoresSession);
             }
             return View(cursosProfessor);
         }
@@ -153,11 +160,49 @@ namespace capitulo01.Areas.Docente.Controllers
             }
 
             var professor = await _context.Professores
+                .Include(p => p.CursosProfessores).ThenInclude(cp => cp.Curso)
                 .FirstOrDefaultAsync(p => p.ProfessorID == id);
 
             if (professor == null)
             {
                 return NotFound();
+            }
+
+            return View(professor);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var professor = await professorDAL.ObterProfessorPorId((long)id);
+
+            if (professor == null)
+            {
+                return NotFound();
+            }
+
+            return View(professor);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(long id, Professor professor)
+        {
+            if (id != professor.ProfessorID)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                await professorDAL.GravarProfessor(professor);
+
+                return RedirectToAction(nameof(Index));
             }
 
             return View(professor);
