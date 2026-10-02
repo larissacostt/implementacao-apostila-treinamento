@@ -3,15 +3,53 @@
 @{
     Layout = "_LayoutIES";
 }
+@section Styles{
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/datatables/css/jquery.dataTables.css" />
+    </environment>
 
-<div class="card-block">
+    <environment exclude="Development">
+        <link rel="stylesheet"
+              href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css"
+              asp-fallback-href="~/lib/datatables/css/jquery.dataTables.css"
+              asp-fallback-test-class="sr-only"
+              asp-fallback-test-property="position"
+              asp-fallback-test-value="absolute" />
+    </environment>
+}
 
-    <div class="card-header text-white bg-primary text-center h1">
-        Cursos Registrados
-    </div>
+<div class="card-body">
 
-    <div class="card-body">
+    <form asp-action="Index" method="get">
 
+        <div class="form-group">
+            <label for="departamentoID">Filtrar por Departamento</label>
+
+            <select name="departamentoID"
+                    id="departamentoID"
+                    class="form-control">
+
+                <option value="">Todos os departamentos</option>
+
+                @foreach (var departamento in ViewBag.Departamentos)
+                {
+                    <option value="@departamento.DepartamentoID">
+                        @departamento.Nome
+                    </option>
+                }
+
+            </select>
+        </div>
+
+        <br />
+
+        <button type="submit" class="btn btn-primary">
+            Filtrar
+        </button>
+
+    </form>
+
+    <hr />
 
         <table class="table">
             <thead>
@@ -55,3 +93,22 @@
     </div>
 
 </div>
+@section ScriptPage{
+    <environment include="Development">
+    <script src="~/lib/datatables/js/jquery.dataTables.js"></script>
+    </environment>
+
+    <environment exclude="Development">
+        <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.js"
+                asp-fallback-src="~/lib/datatables/js/jquery.dataTables.js">
+        </script>
+    </environment>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#tabela_cursos').DataTable({
+                "order": [[1, "asc"]]
+            });
+        });
+    </script>
+}

@@ -20,18 +20,29 @@ namespace capitulo01.Areas.Cadastros.Controllers
             cursoDAL = new CursoDAL(context);
             departamentoDAL = new DepartamentoDAL(context);
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(long? departamentoID)
         {
-            return View(await cursoDAL
-                .ObterCursosClassificadosPorNome()
-                .ToListAsync());
+            var cursos = cursoDAL
+                .ObterCursosClassificadosPorNome();
+
+            if (departamentoID.HasValue)
+            {
+                cursos = cursos
+                    .Where(c => c.DepartamentoID == departamentoID.Value);
+            }
+
+            ViewBag.Departamentos = departamentoDAL
+                   .ObterDepartamentosClassificadosPorNome()
+                   .ToList();
+
+            return View(await cursos.ToListAsync());
         }
 
         [HttpGet]
         public IActionResult Create()
         {
             var departamentos = departamentoDAL
-                .ObterDepartamentosClassifidosPorNome()
+                .ObterDepartamentosClassificadosPorNome()
                 .ToList();
 
             departamentos.Insert(0, new Departamento()
@@ -56,7 +67,7 @@ namespace capitulo01.Areas.Cadastros.Controllers
             }
 
             var departamentos = departamentoDAL
-                .ObterDepartamentosClassifidosPorNome()
+                .ObterDepartamentosClassificadosPorNome()
                 .ToList();
 
             departamentos.Insert(0, new Departamento()

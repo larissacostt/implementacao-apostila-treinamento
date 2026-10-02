@@ -23,7 +23,7 @@ namespace capitulo01.Areas.Cadastros.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await departamentoDAL.ObterDepartamentosClassifidosPorNome().ToListAsync());
+            return View(await departamentoDAL.ObterDepartamentosClassificadosPorNome().ToListAsync());
         }
 
         public IActionResult Create()

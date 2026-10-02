@@ -11,7 +11,7 @@ namespace capitulo01.Data.DAL.Cadastros
             _context = context;
         }
 
-        public IQueryable<Departamento> ObterDepartamentosClassifidosPorNome()
+        public IQueryable<Departamento> ObterDepartamentosClassificadosPorNome()
         {
             return _context.Departamentos.Include(i => i.Instituicao).OrderBy(b => b.Nome);
         }
