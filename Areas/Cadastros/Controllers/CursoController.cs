@@ -37,6 +37,25 @@ namespace capitulo01.Areas.Cadastros.Controllers
 
             return View(await cursos.ToListAsync());
         }
+        public async Task<IActionResult> Details(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var curso = await _context.Cursos
+                .Include(c => c.Departamento)
+                .ThenInclude(d => d.Instituicao)
+                .FirstOrDefaultAsync(c => c.CursoID == id);
+
+            if (curso == null)
+            {
+                return NotFound();
+            }
+
+            return View(curso);
+        }
 
         [HttpGet]
         public IActionResult Create()

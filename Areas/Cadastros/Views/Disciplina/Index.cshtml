@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Modelo.Cadastros.Disciplina>
+
+@{
+    Layout = "_LayoutIES";
+}
+
+<div class="card-block">
+
+    <div class="card-header text-white bg-primary text-center h1">
+        Disciplinas Registradas
+    </div>
+
+    <div class="card-body">
+
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DisciplinaID)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nome)
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DisciplinaID)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nome)
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
