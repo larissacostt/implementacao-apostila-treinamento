@@ -44,44 +44,40 @@ namespace capitulo01.Areas.Cadastros.Controllers
                 return NotFound();
             }
 
-            var curso = await _context.Cursos
-                .Include(c => c.Departamento)
-                .ThenInclude(d => d.Instituicao)
-                .FirstOrDefaultAsync(c => c.CursoID == id);
+            var disciplina = await _context.Disciplinas
+                .Include(d => d.CursosDisciplinas)
+                    .ThenInclude(cd => cd.Curso)
+                .FirstOrDefaultAsync(d => d.DisciplinaID == id);
 
-            if (curso == null)
+            if (disciplina == null)
             {
                 return NotFound();
             }
 
-            return View(curso);
-        }
-
-        [HttpGet]
-        public IActionResult Create()
-        {
-            var departamentos = departamentoDAL
-                .ObterDepartamentosClassificadosPorNome()
-                .ToList();
-
-            departamentos.Insert(0, new Departamento()
-            {
-                DepartamentoID = 0,
-                Nome = "Selecione o departamento"
-            });
-
-            ViewBag.Departamentos = departamentos;
-
-            return View();
+            return View(disciplina);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Curso curso)
+        public async Task<IActionResult> Create(Curso curso, long[] disciplinaIDs)
         {
             if (ModelState.IsValid)
             {
                 await cursoDAL.GravarCurso(curso);
+
+                foreach (var disciplinaID in disciplinaIDs)
+                {
+                    var cursoDisciplina = new CursoDisciplina
+                    {
+                        CursoID = curso.CursoID,
+                        DisciplinaID = disciplinaID
+                    };
+
+                    _context.Set<CursoDisciplina>().Add(cursoDisciplina);
+                }
+
+                await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
 
@@ -96,6 +92,10 @@ namespace capitulo01.Areas.Cadastros.Controllers
             });
 
             ViewBag.Departamentos = departamentos;
+
+            ViewBag.Disciplinas = _context.Disciplinas
+                .OrderBy(d => d.Nome)
+                .ToList();
 
             return View(curso);
         }

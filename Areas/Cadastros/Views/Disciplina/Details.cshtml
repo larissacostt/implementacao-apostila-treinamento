@@ -1,0 +1,68 @@
+﻿@model Modelo.Cadastros.Disciplina
+
+@{
+    Layout = "_LayoutIES";
+}
+
+<div class="card-block">
+
+    <div class="card-header text-white bg-secondary text-center h1">
+        Exibindo uma disciplina
+    </div>
+
+    <div class="card-body">
+
+        <dl class="row">
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.DisciplinaID)
+            </dt>
+
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.DisciplinaID)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Nome)
+            </dt>
+
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Nome)
+            </dd>
+
+        </dl>
+
+        <hr />
+
+        <h3>Cursos que possuem esta disciplina</h3>
+
+        @if (Model.CursosDisciplinas.Any())
+        {
+            <ul>
+                @foreach (var cursoDisciplina in Model.CursosDisciplinas)
+                {
+                    <li>
+                        @cursoDisciplina.Curso?.Nome
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p>
+                Esta disciplina ainda não está vinculada a nenhum curso.
+            </p>
+        }
+
+    </div>
+
+    <div class="card-footer bg-info text-center text-white">
+
+        <a asp-action="Index"
+           class="btn btn-warning">
+            Retornar à listagem de disciplinas
+        </a>
+
+    </div>
+
+</div>

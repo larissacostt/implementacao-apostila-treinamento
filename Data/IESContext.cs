@@ -24,6 +24,7 @@ namespace capitulo01.Data
         public DbSet<Academico> Academicos { get; set; }
         public DbSet<Professor> Professores { get; set; }
         public DbSet<CursoProfessor> CursosProfessores { get; set; }
+   
 
         //como as classes vao ser mapeadas no banco de dados
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -57,11 +57,17 @@
                     <th>
                         @Html.DisplayNameFor(model => model.CursoID)
                     </th>
+
                     <th>
                         @Html.DisplayNameFor(model => model.Nome)
                     </th>
+
                     <th>
                         @Html.DisplayNameFor(model => model.DepartamentoID)
+                    </th>
+
+                    <th>
+                        Ações
                     </th>
                 </tr>
             </thead>
@@ -79,6 +85,11 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.DepartamentoID)
                         </td>
+                        <td>
+                             <a asp-action="Details" 
+                             asp-route-id="@item.CursoID"
+                             class="btn btn-info"> Detalhes </a>
+                        </td>
                     </tr>
                 }
             </tbody>
@@ -92,7 +103,6 @@
         </a>
     </div>
 
-</div>
 @section ScriptPage{
     <environment include="Development">
     <script src="~/lib/datatables/js/jquery.dataTables.js"></script>
