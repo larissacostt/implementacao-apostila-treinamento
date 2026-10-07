@@ -69,8 +69,66 @@ Essas entidades permitem trabalhar, na prática, com diferentes tipos de relacio
 * AJAX
 * Visual Studio Community
 
+Também é necessário possuir uma instância do SQL Server disponível para a criação do banco de dados.
+
+## 🗄️ Banco de dados
+
+O projeto utiliza o Entity Framework Core para realizar o acesso e o gerenciamento dos dados.
+
+- A conexão com o banco de dados é configurada no arquivo:
+
+`appsettings.json`
+
+- A aplicação utiliza uma Connection String para definir o servidor e o banco de dados utilizado. No ambiente de desenvolvimento, pode ser utilizado o SQL Server LocalDB.
+
+Exemplo: Criação do banco de dados
+
+`"ConnectionStrings": {
+  "IESConnection": "Server=(localdb)\\MSSQLLocalDB;Database=IESCasaDoCodigo;Trusted_Connection=True"
+}`
+
+- Após configurar a Connection String, o banco pode ser criado utilizando os recursos do Entity Framework Core e as configurações existentes no projeto.
+- A Connection String deve ser ajustada de acordo com a configuração do SQL Server ou LocalDB disponível no ambiente de execução.
+
+## ▶️ Como executar a aplicação
+
+**1. Clonar o repositório:**
+
+Clone o projeto para sua máquina:
+
+git clone `https://github.com/larissacostt/implementacao-apostila-treinamento.git`
+
+**2. Abrir o projeto:**
+
+Abra a solução do projeto no Visual Studio Community.
+
+**3. Configurar o banco de dados:**
+
+Verifique a Connection String no arquivo:
+
+`appsettings.json`
+
+Configure o servidor e o nome do banco de dados conforme o ambiente local.
+
+**4. Criar/atualizar o banco:**
+
+No Package Manager Console do Visual Studio, execute:
+
+`Update-Database`
+
+Caso o projeto utilize a criação do banco por meio do inicializador configurado na aplicação, a estrutura e os dados iniciais também poderão ser preparados durante a execução.
+
+**5. Executar a aplicação:**
+
+No Visual Studio:
+
+- Selecione o projeto como projeto de inicialização.
+- Execute utilizando IIS Express ou o perfil da aplicação configurado no projeto.
+- Aguarde a abertura do navegador.
+- A aplicação será iniciada utilizando a URL configurada no ambiente de desenvolvimento.
+
 ## 📖 Finalidade
 
 Este repositório tem como finalidade registrar a **implementação prática dos conhecimentos adquiridos durante o treinamento**, utilizando a apostila como material de apoio para compreender e aplicar os conceitos de desenvolvimento de aplicações web com **ASP.NET Core MVC e Entity Framework Core**.
 
-O projeto representa, portanto, uma aplicação prática dos conteúdos estudados, permitindo acompanhar a evolução do aprendizado ao longo do desenvolvimento.
+O projeto representa uma aplicação prática dos conteúdos estudados, permitindo acompanhar a evolução do aprendizado ao longo do desenvolvimento.
