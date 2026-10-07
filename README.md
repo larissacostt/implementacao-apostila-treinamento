@@ -69,6 +69,73 @@ Essas entidades permitem trabalhar, na prática, com diferentes tipos de relacio
 * AJAX
 * Visual Studio Community
 
+## 🗃️ Entity Framework Core
+
+O Entity Framework Core é utilizado para o acesso e a persistência dos dados da aplicação.
+
+Durante o desenvolvimento são trabalhados conceitos como:
+
+- `DbContext`
+- `DbSet`
+- LINQ
+- Relacionamentos entre entidades
+- Migrations
+- Persistência de dados
+- Consultas ao banco de dados
+
+## 📁 Estrutura do projeto
+
+O projeto está organizado seguindo a arquitetura **ASP.NET Core MVC**, utilizando **Areas** para separar diferentes funcionalidades da aplicação.
+
+### Principais diretórios
+
+- `Areas/Cadastros` – funcionalidades relacionadas aos cadastros, como:
+  - `Curso`
+  - `Departamento`
+  - `Disciplina`
+  - `Instituicao`
+
+- `Areas/Discente` – funcionalidades relacionadas aos acadêmicos.
+
+- `Areas/Docente` – funcionalidades relacionadas aos professores.
+
+- `Controllers` – controladores responsáveis pelo processamento das requisições da aplicação.
+
+- `Data` – contexto e configurações relacionadas ao acesso aos dados.
+
+- `Migrations` – migrations utilizadas pelo Entity Framework Core para controlar alterações na estrutura do banco de dados.
+
+- `Models` – entidades e modelos utilizados pela aplicação.
+
+- `Views` – páginas da aplicação, organizadas em:
+  - `Home`
+  - `Infra`
+  - `Shared`
+
+- `Views/Shared` – arquivos compartilhados entre as diferentes páginas, incluindo layouts, validações e páginas de erro.
+
+- `Modelo` – projeto que contém a estrutura de modelos utilizada pela aplicação, organizado em áreas como:
+  - `Cadastros`
+  - `Discente`
+  - `Docente`
+
+### Principais arquivos
+
+- `Program.cs` – ponto de configuração e inicialização da aplicação ASP.NET Core.
+- `appsettings.json` – arquivo de configurações da aplicação, incluindo a Connection String do banco de dados.
+- `libman.json` – arquivo utilizado para gerenciamento das bibliotecas do lado do cliente.
+- `.gitignore` – define arquivos e diretórios que não devem ser versionados pelo Git.
+- `.editorconfig` – configurações de padronização para edição dos arquivos do projeto.
+
+## 📋 Requisitos
+
+Para executar o projeto, é necessário ter instalado:
+
+- .NET SDK compatível com a versão do projeto
+- Visual Studio Community
+- SQL Server LocalDB ou SQL Server
+- Git
+
 Também é necessário possuir uma instância do SQL Server disponível para a criação do banco de dados.
 
 ## 🗄️ Banco de dados
@@ -83,9 +150,11 @@ O projeto utiliza o Entity Framework Core para realizar o acesso e o gerenciamen
 
 Exemplo: Criação do banco de dados
 
-`"ConnectionStrings": {
-  "IESConnection": "Server=(localdb)\\MSSQLLocalDB;Database=IESCasaDoCodigo;Trusted_Connection=True"
-}`
+```json
+"ConnectionStrings": {
+    "IESConnection": "Server=(localdb)\\MSSQLLocalDB;Database=IESCasaDoCodigo;Trusted_Connection=True"
+}
+```
 
 - Após configurar a Connection String, o banco pode ser criado utilizando os recursos do Entity Framework Core e as configurações existentes no projeto.
 - A Connection String deve ser ajustada de acordo com a configuração do SQL Server ou LocalDB disponível no ambiente de execução.
@@ -96,8 +165,9 @@ Exemplo: Criação do banco de dados
 
 Clone o projeto para sua máquina:
 
-git clone `https://github.com/larissacostt/implementacao-apostila-treinamento.git`
-
+```bash
+git clone https://github.com/larissacostt/implementacao-apostila-treinamento.git
+```
 **2. Abrir o projeto:**
 
 Abra a solução do projeto no Visual Studio Community.
